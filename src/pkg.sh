@@ -420,6 +420,10 @@ pkg_configure() {
                 A="$A$S-DCMAKE_FIND_PACKAGE_NO_SYSTEM_PACKAGE_REGISTRY=YES"
             fi
 
+            for o in $pkg_build_options; do 
+                echo O $o
+            done
+
             pkg_run cmake -G"$pkg_build_generator" \
                 -DCMAKE_BUILD_TYPE="$(pkg_cmake_build_type)" \
                 -DCMAKE_INSTALL_PREFIX="$pkg_install_prefix" \
@@ -583,6 +587,7 @@ jagen_pkg_patch() {
 jagen_pkg_provide_patches() {
     local IFS="$jagen_IFS"
     for filename in ${pkg_patches_provided-}; do
+        echo FFF $filename
         if [ -f "$filename" ]; then
             if ! [ -s "$filename" ]; then
                 die "providing a patch '$filename' but the file is empty"
